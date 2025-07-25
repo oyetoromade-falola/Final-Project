@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Payment - COURSEMART FCFMT</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+      html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      background-color: #f4f7fa;
+    }
+    main {
+      flex: 1;
+    }
+    .payment-box {
+      max-width: 600px;
+      margin: 3rem auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.08);
+    }
+    .payment-title {
+      color: #007bff;
+      font-weight: 600;
+    }
+    .summary-box {
+      background-color: #f8f9fa;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body class="bg-light">
+<main>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="index.php">
+      <img src="img/coursemart-logo.png" width="40" height="40" class="me-2" alt="logo">
+      <strong>COURSEMART FCFMT</strong>
+    </a>
+  </div>
+</nav>
+
+<!-- Payment Box -->
+<div class="payment-box">
+  <h4 class="payment-title mb-4 text-center">Payment Details</h4>
+
+  <div class="summary-box mb-4">
+    <h6>Order Summary:</h6>
+    <ul id="order-items" class="list-group mb-2"></ul>
+    <p class="text-end fw-bold">Total: ₦<span id="order-total">0</span></p>
+  </div>
+
+  <form id="paymentForm">
+    <div class="mb-3">
+      <label class="form-label">Select Payment Method</label>
+      <select class="form-select" required>
+        <option value="">Choose</option>
+        <option value="card">Debit/Credit Card</option>
+        <option value="transfer">Bank Transfer</option>
+        <option value="wallet">Student Wallet</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Pay Now</button>
+  </form>
+</div>
+</main>
+
+<!-- Footer -->
+<footer class="text-center text-white bg-dark py-3">
+  <p>
+    <span class="footer-highlight">&copy; 2025 COURSEMART FCFMT</span> | 
+    <span class="footer-credit">Designed by <strong>Falola Regina</strong></span>
+  </p>
+  <p>
+    <a href="contact.html" class="footer-link">Contact</a> |
+    <a href="about.html" class="footer-link">About</a>
+  </p>
+</footer>
+>
+
+<script>
+  // Load cart from localStorage and display summary
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const orderList = document.getElementById("order-items");
+  const totalBox = document.getElementById("order-total");
+
+  let total = 0;
+  cart.forEach(item => {
+    const li = document.createElement("li");
+    li.className = "list-group-item d-flex justify-content-between align-items-center";
+    li.innerHTML = `${item.name} <span>₦${item.price * item.quantity}</span>`;
+    orderList.appendChild(li);
+    total += item.price * item.quantity;
+  });
+
+  totalBox.textContent = total;
+
+  // Simulated payment handler
+  document.getElementById("paymentForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    if (cart.length === 0) {
+      alert("Your cart is empty.");
+      return;
+    }
+
+    // Proceed to success
+    window.location.href = "checkout.html";
+  });
+</script>
+
+</body>
+</html>
